@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
                     };
 
   showImg:boolean = true;
+  customerFeedback:string="good";
 
   constructor() { }
 

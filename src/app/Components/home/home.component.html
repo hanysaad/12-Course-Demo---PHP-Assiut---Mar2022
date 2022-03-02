@@ -3,11 +3,11 @@
 
 <!-- Property binding -->
 <!-- Structural directives -->
-<img *ngIf="showImg" [src]="storeInfo.coverImgURL" alt="">
+<img *ngIf="showImg" [src]="storeInfo?.coverImgURL" alt="">
 
 <h1>
   <!-- Interpolation -->
-  Store name: {{storeInfo.name}}
+  Store name: {{storeInfo?.name}}
   <!-- Event Binding -->
   <button class="btn btn-primary" (click)="toggleImg()">Toggle Img</button>
 </h1>
@@ -21,3 +21,12 @@
     {{loc}}
   </li>
 </ul>
+<hr>
+<div class="mb-3">
+  <label for="" class="form-label">Enter Your Feedback:</label>
+  <input [(ngModel)]="customerFeedback" type="text"class="form-control" name="fback" id="fback">
+
+  <br>
+  For Test: {{customerFeedback}}
+</div>
+
