@@ -1,0 +1,31 @@
+<h2>New Order</h2>
+<div class="mb-3">
+  <label for="cat" class="form-label">Category</label>
+  <!-- <select #cat class="form-control" name="cat" id="cat" (onchange)="updatedSel(#cat.value)"> -->
+  <select [(ngModel)]="selectedCatID" class="form-control" name="cat" id="cat">
+    <option value="0">All</option>
+    <option *ngFor="let cat of catList" [value]="cat.id">
+      {{cat.name}}
+    </option>
+  </select>
+</div>
+<div class="mb-3">
+  <label for="" class="form-label">Client Name:</label>
+  <input #clientName type="text"
+    class="form-control" name="cName" id="cName" >
+</div>
+<!-- <div class="bg-danger">
+  <h2>[For Test] To be removed:</h2>
+  Selected Cat ID in Partent: {{selectedCatID}}
+</div> -->
+<hr>
+<div class="bg-warning">
+  <app-products [receivedCatID]="selectedCatID"
+                (totalPriceChanged)="onTotalPriceChanged($event)"></app-products>
+</div>
+<hr>
+<h2>Total order Price: {{receivedOrderTotalPrice}}</h2>
+<!-- <div class="bg-warning">
+  <h2>To Be Removed:</h2>
+  <button class="btn btn-success"(click)="getNewPrdArr()">Test</button>
+</div> -->

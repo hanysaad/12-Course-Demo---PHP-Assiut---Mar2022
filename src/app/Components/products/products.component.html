@@ -1,54 +1,65 @@
 <!-- <div class="m-2">
   Current Time: {{todayDate | date: 'shortTime'}}
 </div> -->
-<table class="table m-2">
-  <thead>
-    <tr class="bg-dark text-light">
-      <th scope="col">No.</th>
-      <th scope="col">Name</th>
-      <th scope="col">image</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Price in USD</th>
-      <th scope="col">Price in EGP</th>
-      <th>Buy</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- <tr [hidden]="prd.quantity==0" *ngFor="let prd of prdList; let i=index"> -->
-    <!-- <tr *ngFor="let prd of prdList; let i=index" [class.bg-warning]="prd.quantity==0"> -->
-      <!-- ng-container, ng-content, ng-template -->
-    <ng-container *ngFor="let prd of prdList; let i=index; trackBy:trackByProd" >
-      <!-- <tr *ngIf="prd.quantity>0"> -->
-      <!-- <tr [style.background-color]="(prd.quantity==0)?'lightyellow':'lightgray'"> -->
-      <tr [ngStyle]="{'background-color': (prd.quantity==0)?'lightyellow':'lightgray',
-                      'color':(prd.quantity==0)?'red':'darkblue'}">
-      <!-- <tr [ngClass]="{'bg-warning': prd.quantity==0,
-                      'text-danger':prd.quantity==0}"> -->
-        <td>{{i+1}}</td>
-        <td>{{prd.name | uppercase}}</td>
-        <td>
-          <!-- <img LightBox hoverColor="red" [src]="prd.imgURL"> -->
-          <img LightBox="red" defaultColor="lightgreen" [src]="prd.imgURL">
-        </td>
-
-        <!-- <td>{{prd.quantity}}</td> -->
-        <!-- <td>
-          <ng-container *ngIf="prd.quantity>0; else outOfStock">{{prd.quantity}}</ng-container>
-          <ng-template #outOfStock>Out of Stock</ng-template>
-        </td> -->
-        <td>
-          <ng-container [ngSwitch]="prd.quantity">
-            <ng-container *ngSwitchCase="0">Out of stock</ng-container>
-            <ng-container *ngSwitchCase="1">Last Item!</ng-container>
-            <ng-container *ngSwitchCase="2">Last 2 items!</ng-container>
-            <ng-container *ngSwitchDefault>{{prd.quantity}}</ng-container>
-          </ng-container>
-        </td>
-        <td>{{prd.price | currency: 'USD': 'symbol'}}</td>
-        <td>{{prd.price | USDtoEGP:20 | currency: 'EGP'}}</td>
-
-        <td><button [disabled]="prd.quantity==0" type="button" class="btn btn-success">Buy</button></td>
+<div class="m-2">
+  <table class="table">
+    <thead>
+      <tr class="bg-dark text-light">
+        <th scope="col">No.</th>
+        <th scope="col">Name</th>
+        <th scope="col">image</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price in USD</th>
+        <th scope="col">Price in EGP</th>
+        <th>Items Count</th>
+        <th>Add to cart</th>
       </tr>
-    </ng-container>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <!-- <tr [hidden]="prd.quantity==0" *ngFor="let prd of prdList; let i=index"> -->
+      <!-- <tr *ngFor="let prd of prdList; let i=index" [class.bg-warning]="prd.quantity==0"> -->
+        <!-- ng-container, ng-content, ng-template -->
+      <ng-container *ngFor="let prd of prdListOfCat; let i=index; trackBy:trackByProd" >
+        <!-- <tr *ngIf="prd.quantity>0"> -->
+        <!-- <tr [style.background-color]="(prd.quantity==0)?'lightyellow':'lightgray'"> -->
+        <tr [ngStyle]="{'background-color': (prd.quantity==0)?'lightyellow':'lightgray',
+                        'color':(prd.quantity==0)?'red':'darkblue'}">
+        <!-- <tr [ngClass]="{'bg-warning': prd.quantity==0,
+                        'text-danger':prd.quantity==0}"> -->
+          <td>{{i+1}}</td>
+          <td>{{prd.name | uppercase}}</td>
+          <td>
+            <!-- <img LightBox hoverColor="red" [src]="prd.imgURL"> -->
+            <img LightBox="red" defaultColor="lightgreen" [src]="prd.imgURL">
+          </td>
+
+          <!-- <td>{{prd.quantity}}</td> -->
+          <!-- <td>
+            <ng-container *ngIf="prd.quantity>0; else outOfStock">{{prd.quantity}}</ng-container>
+            <ng-template #outOfStock>Out of Stock</ng-template>
+          </td> -->
+          <td>
+            <ng-container [ngSwitch]="prd.quantity">
+              <ng-container *ngSwitchCase="0">Out of stock</ng-container>
+              <ng-container *ngSwitchCase="1">Last Item!</ng-container>
+              <ng-container *ngSwitchCase="2">Last 2 items!</ng-container>
+              <ng-container *ngSwitchDefault>{{prd.quantity}}</ng-container>
+            </ng-container>
+          </td>
+          <td>{{prd.price | currency: 'USD': 'symbol'}}</td>
+          <td>{{prd.price | USDtoEGP:20 | currency: 'EGP'}}</td>
+          <td> <input #itemsCount type="number" class="form-control"></td>
+          <td>
+            <button [disabled]="prd.quantity==0" type="button" (click)="updateTotalPrice(prd.price,itemsCount.value)" class="btn btn-success">Add to cart</button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<!-- <div class="bg-danger">
+  <h2>[For Test] To be removed:</h2>
+  Order Total Price in Child: {{orderTotalPrice}}
+</div> -->
