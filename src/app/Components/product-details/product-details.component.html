@@ -1,0 +1,22 @@
+<div class="card" style="width: 18rem;">
+  <img [src]="prd?.imgURL" class="card-img-top" alt="product">
+  <div class="card-body">
+    <h5 class="card-title">{{prd?.name}}</h5>
+    <div class="card-text">
+      <h6>Price: {{prd?.price}}</h6>
+      <h6>Quantity: {{prd?.quantity}}</h6>
+    </div>
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+      <button [disabled]="currPrdID==prdIDList[0]" type="button" class="btn btn-danger" (click)="goPrevious()">Previous</button>
+      <button  class="btn btn-secondary" (click)="goBack()">Go back</button>
+      <button [disabled]="currPrdID==prdIDList[prdIDList.length-1]" type="button" class="btn btn-success" (click)="goNext()">Next</button>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="mb-3">
+  <label  class="form-label">Search Product:</label>
+  <input type="text" #prdName
+    class="form-control" name="prd" id="prd"  placeholder="Enter Product name">
+    <button class="btn btn-primary" (click)="searchProduct(prdName.value)">Search</button>
+</div>

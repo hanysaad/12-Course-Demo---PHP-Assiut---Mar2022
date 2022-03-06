@@ -11,6 +11,7 @@
         <th scope="col">Quantity</th>
         <th scope="col">Price in USD</th>
         <th scope="col">Price in EGP</th>
+        <th>Details</th>
         <th>Items Count</th>
         <th>Add to cart</th>
       </tr>
@@ -48,6 +49,10 @@
           </td>
           <td>{{prd.price | currency: 'USD': 'symbol'}}</td>
           <td>{{prd.price | USDtoEGP:20 | currency: 'EGP'}}</td>
+          <td>
+            <button type="button" (click)="openProductDetails(prd.id)" class="btn btn-success">Details</button>
+            <!-- <a class="btn btn-success" role="button" [routerLink]="['/Products', prd.id]">Details</a> -->
+          </td>
           <td> <input #itemsCount type="number" class="form-control"></td>
           <td>
             <button [disabled]="prd.quantity==0" type="button" (click)="updateTotalPrice(prd.price,itemsCount.value)" class="btn btn-success">Add to cart</button>
