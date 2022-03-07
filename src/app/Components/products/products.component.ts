@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { Router } from '@angular/router';
 import { IProduct } from 'src/app/Models/iproduct';
 import { ProductService } from 'src/app/Services/product.service';
+import { ProductsAPIService } from 'src/app/Services/products-api.service';
 
 @Component({
   selector: 'app-products',
@@ -18,17 +19,25 @@ export class ProductsComponent implements OnInit, OnChanges{
   @Output() totalPriceChanged: EventEmitter<number>;
   // private prdService: ProductService;
   constructor(private prdService:ProductService
+            , private prdAPIService: ProductsAPIService
             , private router: Router) {
     // this.prdService=prdService;
     this.totalPriceChanged= new EventEmitter<number>();
    }
   ngOnChanges(): void {
     // this.getProductsOfCat();
-    this.prdListOfCat=this.prdService.getProductsByCatID(this.receivedCatID);
+    // this.prdListOfCat=this.prdService.getProductsByCatID(this.receivedCatID);
+    this.prdAPIService.getProductsByCatID(this.receivedCatID)
+                      .subscribe(prdList=>{
+                        this.prdListOfCat=prdList;
+                      });
   }
 
   ngOnInit(): void {
-    this.prdListOfCat=this.prdService.getProductsByCatID(this.receivedCatID);
+    // this.prdListOfCat=this.prdService.getProductsByCatID(this.receivedCatID);
+    this.prdAPIService.getAllProducts().subscribe(prdList=>{
+      this.prdListOfCat=prdList;
+    });
   }
 
   trackByProd(index: number, item: IProduct)

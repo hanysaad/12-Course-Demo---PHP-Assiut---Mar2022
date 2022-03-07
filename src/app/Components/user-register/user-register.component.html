@@ -1,0 +1,83 @@
+<form [formGroup]="usrFromGroup" class="m-2" (ngSubmit)="register()">
+  <div class="mb-3">
+    <label for="usrName" class="form-label">Full Name</label>
+    <input type="text" formControlName="fullName" class="form-control" name="usrName" id="usrName"
+      [class.is-valid]="fullName?.valid" [class.is-invalid]="fullName?.invalid">
+    <div class="alert alert-warning" [hidden]="fullName?.valid || fullName?.untouched">
+      <small *ngIf="fullName?.errors?.['required']">
+        Full name is required.
+      </small>
+      <small *ngIf="fullName?.errors?.['minlength']">
+        Full name must be 3 letters at least.
+      </small>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="usrEmail" class="form-label">Email</label>
+    <input type="email" formControlName="email" class="form-control" name="usrEmail" id="usrEmail">
+  </div>
+
+  <div formArrayName="mobileNo">
+    <div class="mb-3 ms-4" *ngFor="let mob of mobileNo.controls; let i=index">
+      <label for="usrMobile{{i+1}}" class="form-label">Mobile No.{{i+1}}</label>
+      <input type="number" [formControlName]="i" class="form-control" name="usrMobile{{i+1}}" id="usrMobile{{i+1}}">
+      <button *ngIf="mob.value && i==mobileNo.controls.length-1" class="btn btn-primary d-block ms-auto"
+        (click)="addMobile()">+</button>
+    </div>
+  </div>
+
+  <div formGroupName="address">
+    Address:
+    <div class="mb-3 ms-2">
+      <label for="usrCity" class="form-label">city</label>
+      <input type="text" formControlName="city" class="form-control" name="usrCity" id="usrCity">
+    </div>
+    <div class="mb-3 ms-2">
+      <label for="usrStreet" class="form-label">Street</label>
+      <input type="text" formControlName="street" class="form-control" name="usrStreet" id="usrStreet">
+    </div>
+  </div>
+
+
+  <div class="mb-3">
+    <label for="usrPass" class="form-label">Password</label>
+    <input type="password" formControlName="password" class="form-control" name="usrPass" id="usrPass">
+  </div>
+
+  <div class="mb-3">
+    <label for="usrRePass" class="form-label">Retype Password</label>
+    <input type="password" formControlName="rePassword" class="form-control" name="usrRePass" id="usrRePass">
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" formControlName="referral" name="referral" id="btnradio1" autocomplete="off"
+      value="SocialMedia" (change)="updateReferralValidation()">
+    <label class="btn btn-outline-primary" for="btnradio1">Social media</label>
+    <input type="radio" class="btn-check" formControlName="referral" name="referral" id="btnradio2" autocomplete="off"
+      value="Friend"  (change)="updateReferralValidation()">
+    <label class="btn btn-outline-primary" for="btnradio2">from a Friend</label>
+    <input type="radio" class="btn-check" formControlName="referral" name="referral" id="btnradio3" autocomplete="off"
+      value="other"  (change)="updateReferralValidation()">
+    <label class="btn btn-outline-primary" for="btnradio3">other</label>
+  </div>
+  <div class="mb-3" *ngIf="referral?.value=='other'">
+    <label for="refOther" class="form-label">specify other:</label>
+    <input type="text" formControlName="referralOther" class="form-control" name="refOther" id="refOther">
+  </div>
+
+<br>
+  <button [disabled]="usrFromGroup.invalid" type="submit" class="btn btn-success">Submit</button>
+</form>
+
+<hr>
+<div class="bg-warning">
+  <h3>[For Test]:</h3>
+  <h4>
+    {{usrFromGroup.value | json}}
+    <br>
+    {{usrFromGroup.get('fullName')?.errors | json}}
+    <br>
+    <!-- {{checkMobileRequired}} -->
+  </h4>
+</div>

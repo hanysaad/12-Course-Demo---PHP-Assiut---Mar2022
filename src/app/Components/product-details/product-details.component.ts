@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { IProduct } from 'src/app/Models/iproduct';
 import { ProductService } from 'src/app/Services/product.service';
 
@@ -9,11 +10,13 @@ import { ProductService } from 'src/app/Services/product.service';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
   prd: IProduct | undefined = undefined;
   prdIDList: number[] = [];
   currPrdID: number = 0;
   private currIndex: number = 0;
+
+  // private subscriptionList: Subscription[]=[];
   constructor(private activatedRoute: ActivatedRoute
     , private location: Location
     , private router: Router
@@ -36,7 +39,27 @@ export class ProductDetailsComponent implements OnInit {
       }
     });
 
+    // let subsc=this.activatedRoute.paramMap.subscribe({
+    //   next:(paramMap)=>{
+    //     this.currPrdID = (paramMap.get('pid')) ? Number(this.activatedRoute.snapshot.paramMap.get('pid')) : 0;
+    //   },
+    //   error: (err)=>{
+    //     console.log(err);
+    //   },
+    //   complete: ()=>{}
+    // });
+
+    // this.subscriptionList.push(subsc);
   }
+
+  ngOnDestroy(): void {
+    // this.subscription.unsubscribe();
+    // for (let sub of this.subscriptionList)
+    // {
+    //   sub.unsubscribe();
+    // }
+  }
+
 
   goBack() {
     this.location.back();

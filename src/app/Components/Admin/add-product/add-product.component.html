@@ -1,0 +1,55 @@
+<!-- <button class="btn - btn-success m-2" (click)="InsertProduct()">Submit</button> -->
+<form #prdFrm="ngForm" (ngSubmit)="InsertProduct()">
+  <div class="mb-3">
+    <label for="prdName" class="form-label">Product Name</label>
+    <input #prdNameInp="ngModel" type="text" [(ngModel)]="newPrd.name"
+      class="form-control" name="prdName" id="prdName"
+      required pattern="[A-Za-z]{3,15}" [class.is-valid]="prdNameInp.valid" [class.is-invalid]="prdNameInp.invalid">
+      <div class="alert alert-warning" [hidden]="prdNameInp.valid || prdNameInp.untouched" >
+        <small *ngIf="prdNameInp.errors?.['required']">
+          Product name is required.
+        </small>
+        <small *ngIf="prdNameInp.errors?.['pattern']">
+          Product name must be 3 letters at least.
+        </small>
+      </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="prdQuant" class="form-label">Quantity</label>
+    <input type="number" [(ngModel)]="newPrd.quantity"
+      class="form-control" name="prdQuant" id="prdQuant" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="prdPrc" class="form-label">Price</label>
+    <input type="number" [(ngModel)]="newPrd.price"
+      class="form-control" name="prdPrc" id="prdPrc" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="prdCat" class="form-label">Select Category</label>
+    <select class="form-control" [(ngModel)]="newPrd.catID"
+       name="prdCat" id="prdCat" required>
+      <option *ngFor="let cat of catList" [value]="cat.id">
+        {{cat.name}}
+    </select>
+  </div>
+
+  <!-- <div class="mb-3">
+    <label for="prdCat" class="form-label">Product Image</label>
+    <input type="file">
+  </div> -->
+
+  <button [disabled]="prdFrm.invalid" type="submit" class="btn btn-success">Submit</button>
+</form>
+
+<hr>
+<div class="bg-warning">
+  <h3>[For Test] To be removed:</h3>
+  <h4>
+    {{newPrd | json}}
+    <hr>
+    {{prdNameInp.errors | json }}
+  </h4>
+</div>
